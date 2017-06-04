@@ -80,17 +80,25 @@ public class StartActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_overview) {
 
-        } else if (id == R.id.nav_slideshow) {
+            titelleiste("Übersicht");
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_meeting) {
 
-        } else if (id == R.id.nav_share) {
+            titelleiste("Termine");
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_todo) {
+
+            titelleiste("To Do");
+
+        } else if (id == R.id.nav_money) {
+
+            titelleiste("Mein Geld");
+
+        } else if (id == R.id.nav_about) {
+
+            titelleiste("Über diese APP");
 
         }
 
@@ -98,4 +106,12 @@ public class StartActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    // Funktion um den Text der Titelleiste zu ändern
+    public void titelleiste(String title){
+
+        // Setzt den Übergebenen Wert als Titelleiste
+        setTitle(title);
+    }
+
 }
