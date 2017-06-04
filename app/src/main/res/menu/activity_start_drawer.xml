@@ -4,29 +4,27 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_overview"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_menu_overview"
             android:title="Übersicht" />
         <item
             android:id="@+id/nav_meeting"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_menu_date"
             android:title="Termine" />
         <item
             android:id="@+id/nav_todo"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_menu_todo"
             android:title="To Do" />
         <item
             android:id="@+id/nav_money"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_menu_euro"
             android:title="Mein Geld" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
+    <group android:checkableBehavior="single">
             <item
                 android:id="@+id/nav_about"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/ic_menu_help"
                 android:title="Über diese APP" />
-        </menu>
-    </item>
+    </group>
 
 </menu>
