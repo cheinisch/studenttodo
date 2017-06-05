@@ -5,26 +5,26 @@
         <item
             android:id="@+id/nav_overview"
             android:icon="@drawable/ic_menu_overview"
-            android:title="Übersicht" />
+            android:title="@string/overview_title" />
         <item
             android:id="@+id/nav_meeting"
             android:icon="@drawable/ic_menu_date"
-            android:title="Termine" />
+            android:title="@string/date_title" />
         <item
             android:id="@+id/nav_todo"
             android:icon="@drawable/ic_menu_todo"
-            android:title="To Do" />
+            android:title="@string/todo_title" />
         <item
             android:id="@+id/nav_money"
             android:icon="@drawable/ic_menu_euro"
-            android:title="Mein Geld" />
+            android:title="@string/money_title" />
     </group>
 
     <group android:checkableBehavior="single">
-            <item
-                android:id="@+id/nav_about"
-                android:icon="@drawable/ic_menu_help"
-                android:title="Über diese APP" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_menu_help"
+            android:title="@string/about_title" />
     </group>
 
 </menu>

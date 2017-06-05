@@ -5,4 +5,19 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- Übersicht -->
+    <string name="overview_title">Übersicht</string>
+
+    <!-- Termine -->
+    <string name="date_title">Termine</string>
+
+    <!-- To Do -->
+    <string name="todo_title">To Do</string>
+
+    <!-- Geld -->
+    <string name="money_title">Mein Geld</string>
+
+    <!-- About -->
+    <string name="about_title">Über diese App</string>
 </resources>
