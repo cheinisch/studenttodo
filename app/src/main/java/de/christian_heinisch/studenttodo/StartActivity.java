@@ -3,6 +3,7 @@ package de.christian_heinisch.studenttodo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -98,7 +99,7 @@ public class StartActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_about) {
 
-            titelleiste("Über diese APP");
+            about();
 
         }
 
@@ -112,6 +113,21 @@ public class StartActivity extends AppCompatActivity
 
         // Setzt den Übergebenen Wert als Titelleiste
         setTitle(title);
+    }
+
+    public void about() {
+
+        titelleiste(getString(R.string.about_title));
+
+        AboutFragment aboutFragment = new AboutFragment();
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(
+                R.id.content_start,
+                aboutFragment,
+                aboutFragment.getTag()
+        )
+                .addToBackStack(null)
+                .commit();
     }
 
 }

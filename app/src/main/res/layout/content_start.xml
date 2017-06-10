@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:id="@+id/content_start"
     tools:context="de.christian_heinisch.studenttodo.StartActivity"
     tools:showIn="@layout/app_bar_start">
 
