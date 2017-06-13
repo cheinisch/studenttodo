@@ -14,6 +14,8 @@
 
     <!-- To Do -->
     <string name="todo_title">To Do</string>
+    <string name="todo_todo_title">Noch zu erledigen</string>
+    <string name="todo_finish_title">Schon erledigt</string>
 
     <!-- Geld -->
     <string name="money_title">Mein Geld</string>

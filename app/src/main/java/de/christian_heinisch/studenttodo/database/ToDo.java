@@ -20,11 +20,11 @@ public class ToDo {
 
     }
 
-    public String getStuff() {
+    public String getToDo() {
         return todo;
     }
 
-    public void setStuff(String todo) {
+    public void setToDo(String todo) {
         this.todo = todo;
     }
 
