@@ -23,7 +23,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="@string/todo_add_beschreibung_edit" />
+            android:text="@string/todo_add_beschreibung_edit"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
 
         <TextView
             android:id="@+id/textView5"
@@ -37,6 +38,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="date"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
             tools:text="01.01.2017" />
     </LinearLayout>
 
