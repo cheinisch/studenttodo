@@ -9,9 +9,10 @@
     <!-- TODO: Update blank fragment layout -->
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollView2">
+        android:padding="@dimen/padding">
 
         <LinearLayout
             android:layout_width="match_parent"

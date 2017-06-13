@@ -9,8 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/padding_left"
-        android:paddingRight="@dimen/padding_right">
+        android:padding="@dimen/padding">
 
         <TextView
             android:id="@+id/textViewAbout_developersTitle"

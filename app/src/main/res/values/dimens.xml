@@ -7,5 +7,9 @@
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="padding_right">10dp</dimen>
     <dimen name="padding_left">10dp</dimen>
+    <dimen name="padding_top">10dp</dimen>
+    <dimen name="padding_bottom">10dp</dimen>
+    <dimen name="padding">10dp</dimen>
+
     <dimen name="padding_dialog">20dp</dimen>
 </resources>
