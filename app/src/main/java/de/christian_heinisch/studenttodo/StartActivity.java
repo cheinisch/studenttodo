@@ -133,4 +133,23 @@ public class StartActivity extends AppCompatActivity
 
     }
 
+
+
+    /*
+    Dialoge
+     */
+
+    public void DialogAddToDO(long id){
+
+        Bundle args = new Bundle();
+        args.putLong("id", id);
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        // Create and show the dialog.
+        DialogAddTodoFragment newFragment = new DialogAddTodoFragment();
+        newFragment.setArguments(args);
+        newFragment.show(ft, "dialog");
+
+    }
+
 }
