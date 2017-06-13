@@ -1,9 +1,11 @@
 package de.christian_heinisch.studenttodo;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -91,7 +93,7 @@ public class StartActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_todo) {
 
-            titelleiste("To Do");
+            todo();
 
         } else if (id == R.id.nav_money) {
 
@@ -119,15 +121,25 @@ public class StartActivity extends AppCompatActivity
 
         titelleiste(getString(R.string.about_title));
 
-        AboutFragment aboutFragment = new AboutFragment();
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(
-                R.id.content_start,
-                aboutFragment,
-                aboutFragment.getTag()
-        )
-                .addToBackStack(null)
-                .commit();
+        Fragment f = new AboutFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(R.id.content_start, f);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    public void todo() {
+
+        titelleiste(getString(R.string.todo_title));
+
+        Fragment f = new ToDoFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(R.id.content_start, f);
+        ft.addToBackStack(null);
+        ft.commit();
+
     }
 
 }
