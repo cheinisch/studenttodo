@@ -23,7 +23,8 @@
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/todo_todo_title" />
+                android:text="@string/todo_todo_title"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
 
             <ListView
                 android:layout_width="match_parent"
@@ -33,7 +34,8 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/todo_finish_title" />
+                android:text="@string/todo_finish_title"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
 
             <ListView
                 android:layout_width="match_parent"
@@ -57,9 +59,9 @@
         android:clickable="true"
         android:paddingBottom="10dp"
         android:paddingRight="@dimen/padding_right"
-        app:elevation="0dp"
-        app:fabSize="mini"
         android:src="@drawable/ic_add"
+        app:elevation="0dp"
+        app:fabSize="normal"
         app:srcCompat="@color/colorAccent" />
 
 </android.support.design.widget.CoordinatorLayout>
