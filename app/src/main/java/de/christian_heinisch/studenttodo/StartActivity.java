@@ -88,7 +88,7 @@ public class StartActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_money) {
 
-            titelleiste("Mein Geld");
+            money();
 
         } else if (id == R.id.nav_about) {
 
@@ -107,6 +107,10 @@ public class StartActivity extends AppCompatActivity
         // Setzt den Übergebenen Wert als Titelleiste
         setTitle(title);
     }
+
+    /*
+    Fragmente
+     */
 
     public void about() {
 
@@ -133,6 +137,19 @@ public class StartActivity extends AppCompatActivity
 
     }
 
+
+    public void money() {
+
+        titelleiste(getString(R.string.money_title));
+
+        Fragment f = new MoneyFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(R.id.content_start, f);
+        ft.addToBackStack(null);
+        ft.commit();
+
+    }
 
 
     /*
