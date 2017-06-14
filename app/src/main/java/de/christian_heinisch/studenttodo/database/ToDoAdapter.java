@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.christian_heinisch.studenttodo.R;
+import de.christian_heinisch.studenttodo.StartActivity;
 
 
 /**
@@ -82,12 +83,13 @@ public class ToDoAdapter  extends ArrayAdapter<ToDo> {
             public void onClick(View view){
                 dataSource.open();
                 if(checked.equalsIgnoreCase("true")){
-
+                    dataSource.updateToDo(todo.getId(), todo.getToDo(), "false", todo.isDate());
                 }else{
-
+                    dataSource.updateToDo(todo.getId(), todo.getToDo(), "true", todo.isDate());
                 }
                 dataSource.close();
 
+                ((StartActivity)getContext()).todo();
             }
         });
 
