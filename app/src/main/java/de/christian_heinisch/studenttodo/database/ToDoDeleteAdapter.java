@@ -21,11 +21,11 @@ import de.christian_heinisch.studenttodo.StartActivity;
  * Created by chris on 09.01.2017.
  */
 
-public class ToDoAdapter  extends ArrayAdapter<ToDo> {
+public class ToDoDeleteAdapter extends ArrayAdapter<ToDo> {
 
     private ToDoDataSource dataSource;
 
-    public ToDoAdapter(Context context, ArrayList<ToDo> zeugs) {
+    public ToDoDeleteAdapter(Context context, ArrayList<ToDo> zeugs) {
         super(context, 0, zeugs);
     }
 

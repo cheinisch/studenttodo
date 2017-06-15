@@ -1,14 +1,14 @@
 package de.christian_heinisch.studenttodo;
 
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.widget.FloatingActionButton;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -45,13 +45,14 @@ public class ToDoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootview = inflater.inflate(R.layout.fragment_to_do, container, false);
+        setHasOptionsMenu(true);
 
         FloatingActionButton fab = (FloatingActionButton) rootview.findViewById(R.id.fbToDoAdd);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 System.out.println("Test");
-                ((StartActivity)getContext()).DialogAddToDO(1);
+                ((StartActivity)getContext()).DialogAddToDO();
             }
         });
 
@@ -61,6 +62,33 @@ public class ToDoFragment extends Fragment {
 
         return rootview;
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.delete_todo, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_delete_todo) {
+            System.out.println("LSCHEN");
+
+            return true;
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     public void getToDoList(){
         dataSource_todo = new ToDoDataSource(getContext());

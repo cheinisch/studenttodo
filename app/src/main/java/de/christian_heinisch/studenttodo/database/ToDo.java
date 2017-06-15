@@ -8,10 +8,10 @@ public class ToDo {
 
     private String todo;
     private String checked;
-    private int date;
+    private long date;
     private long id;
 
-    public ToDo(String todo, String checked, int date, long id){
+    public ToDo(String todo, String checked, long date, long id){
 
         this.todo= todo;
         this.checked = checked;
@@ -36,11 +36,11 @@ public class ToDo {
         this.checked = checked;
     }
 
-    public int isDate() {
+    public long isDate() {
         return date;
     }
 
-    public void setDate(int date) {
+    public void setDate(long date) {
         this.date = date;
     }
 

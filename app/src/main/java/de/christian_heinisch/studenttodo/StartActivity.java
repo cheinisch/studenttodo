@@ -6,6 +6,8 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.text.format.DateFormat;
+import android.view.MenuInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +17,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class StartActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,6 +42,7 @@ public class StartActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
@@ -45,13 +54,15 @@ public class StartActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.start, menu);
-        return true;
-    }
+        return false;
+    }*/
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -156,10 +167,9 @@ public class StartActivity extends AppCompatActivity
     Dialoge
      */
 
-    public void DialogAddToDO(long id){
+    public void DialogAddToDO(){
 
         Bundle args = new Bundle();
-        args.putLong("id", id);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         // Create and show the dialog.
@@ -168,5 +178,19 @@ public class StartActivity extends AppCompatActivity
         newFragment.show(ft, "dialog");
 
     }
+
+    public void DialogEditToDO(long id){
+
+        Bundle args = new Bundle();
+        args.putLong("id", id);
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        // Create and show the dialog.
+        DialogEditTodoFragment newFragment = new DialogEditTodoFragment();
+        newFragment.setArguments(args);
+        newFragment.show(ft, "dialog");
+
+    }
+
 
 }

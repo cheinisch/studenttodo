@@ -8,10 +8,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.text.format.DateFormat;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 
 public class ToDoDataSource {
@@ -30,22 +33,22 @@ public class ToDoDataSource {
 
 
     public ToDoDataSource(Context context) {
-        Log.d(LOG_TAG, "Unsere DataSource erzeugt jetzt den dbHelper.");
+        //Log.d(LOG_TAG, "Unsere DataSource erzeugt jetzt den dbHelper.");
         dbHelper = new StudentToDoDbHelper(context);
     }
 
     public void open() {
-        Log.d(LOG_TAG, "Eine Referenz auf die Datenbank wird jetzt angefragt.");
+        //Log.d(LOG_TAG, "Eine Referenz auf die Datenbank wird jetzt angefragt.");
         database = dbHelper.getWritableDatabase();
-        Log.d(LOG_TAG, "Datenbank-Referenz erhalten. Pfad zur Datenbank: " + database.getPath());
+        //Log.d(LOG_TAG, "Datenbank-Referenz erhalten. Pfad zur Datenbank: " + database.getPath());
     }
 
     public void close() {
         dbHelper.close();
-        Log.d(LOG_TAG, "Datenbank mit Hilfe des DbHelpers geschlossen.");
+        //Log.d(LOG_TAG, "Datenbank mit Hilfe des DbHelpers geschlossen.");
     }
 
-    public ToDo createToDo(String todoname, String checked, int date) {
+    public ToDo createToDo(String todoname, String checked, long date) {
         ContentValues values = new ContentValues();
         values.put(StudentToDoDbHelper.COLUMN_TODO, todoname);
         values.put(StudentToDoDbHelper.COLUMN_TODO_DATE, date);
@@ -73,7 +76,8 @@ public class ToDoDataSource {
     }
 
 
-    public ToDo updateToDo(long id, String todoname, String checked, int date) {
+    public ToDo updateToDo(long id, String todoname, String checked, long date) {
+
 
         ContentValues values = new ContentValues();
         values.put(StudentToDoDbHelper.COLUMN_TODO, todoname);
@@ -114,7 +118,25 @@ public class ToDoDataSource {
         return date;
     }
 
-    public void updateDate(long id, int date){
+    public String getChecked(long id){
+
+        String checked;
+
+        Cursor cursor = database.query(StudentToDoDbHelper.TABLE_TODO_LIST,
+                columns, StudentToDoDbHelper.COLUMN_ID + "=" + id ,null, null, null, null);
+
+        ToDo todo;
+
+        if (cursor!= null && cursor.moveToFirst());
+        do {
+            todo = cursorToToDo(cursor);
+            checked = todo.isChecked();
+        } while (cursor.moveToNext());
+
+        return checked;
+    }
+
+    public void updateDate(long id, long date){
 
         Cursor cursor = database.query(StudentToDoDbHelper.TABLE_TODO_LIST,
                 columns, StudentToDoDbHelper.COLUMN_ID + "=" + id ,null, null, null, null);
@@ -169,6 +191,17 @@ public class ToDoDataSource {
 
     }
 
+    private String CheckDate(long time) {
+
+
+
+        Calendar cal = Calendar.getInstance(Locale.GERMAN);
+        cal.setTimeInMillis(time);
+        String datenew = DateFormat.format("dd.MM.yyyy", cal).toString();
+        System.out.println("DATUM: " + datenew);
+        return datenew;
+    }
+
 
     private ToDo cursorToToDo(Cursor cursor) {
         int idIndex = cursor.getColumnIndex(StudentToDoDbHelper.COLUMN_ID);
@@ -177,7 +210,7 @@ public class ToDoDataSource {
         int idToDoChecked = cursor.getColumnIndex(StudentToDoDbHelper.COLUMN_TODO_CHECKED);
 
         String todoname = cursor.getString(idToDo);
-        int date = cursor.getInt(idToDodate);
+        long date = cursor.getLong(idToDodate);
         String checked = cursor.getString(idToDoChecked);
         long id = cursor.getLong(idIndex);
 

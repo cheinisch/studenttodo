@@ -15,7 +15,7 @@ public class StudentToDoDbHelper extends SQLiteOpenHelper {
 
 
     public static final String DB_NAME = "studenttodo.db";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 2;
 
     public static final String TABLE_TODO_LIST = "todo_list";
 
@@ -29,13 +29,13 @@ public class StudentToDoDbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + TABLE_TODO_LIST +
                     "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_TODO + " TEXT NOT NULL, " +
-                    COLUMN_TODO_DATE + " INT NOT NULL, " +
+                    COLUMN_TODO_DATE + " INTEGER NOT NULL, " +
                     COLUMN_TODO_CHECKED + " TEXT NOT NULL);";
 
 
     public StudentToDoDbHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
-        Log.d(LOG_TAG, "DbHelper hat die Datenbank: " + getDatabaseName() + " erzeugt.");
+        //Log.d(LOG_TAG, "DbHelper hat die Datenbank: " + getDatabaseName() + " erzeugt.");
     }
 
     @Override

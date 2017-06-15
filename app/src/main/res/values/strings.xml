@@ -16,6 +16,7 @@
     <string name="todo_title">To Do</string>
     <string name="todo_todo_title">Noch zu erledigen</string>
     <string name="todo_finish_title">Schon erledigt</string>
+    <string name="action_delete_todo">löschen</string>
 
     <!-- To Do Add -->
     <string name="todo_add_title">Neue Aufgabe</string>
