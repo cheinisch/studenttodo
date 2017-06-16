@@ -1,5 +1,6 @@
 package de.christian_heinisch.studenttodo.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -34,8 +35,10 @@ public class MyRecyclerViewAdapter extends RecyclerView
         TextView dateTime;
         CheckBox checked;
 
+
         public DataObjectHolder(View itemView) {
             super(itemView);
+
             label = (TextView) itemView.findViewById(R.id.textView_item_todolist_content);
             dateTime = (TextView) itemView.findViewById(R.id.textView_item_todolist_Date);
             checked = (CheckBox) itemView.findViewById(R.id.cbToDo);

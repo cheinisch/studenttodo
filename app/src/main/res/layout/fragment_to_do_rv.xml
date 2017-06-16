@@ -29,6 +29,20 @@
             android:scrollbars="vertical"
             tools:listitem="@layout/item_todolist" />
 
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/todo_finish_title"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_checked"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                tools:listitem="@layout/item_todolist" />
+
     </LinearLayout>
 </ScrollView>
 

@@ -39,7 +39,9 @@ public class ToDoFragment_RV extends Fragment {
 
     private ToDoDataSource dataSource_todo;
     private RecyclerView mRecyclerView;
+    private RecyclerView mRecyclerView_checked;
     private RecyclerView.Adapter mAdapter;
+    private RecyclerView.Adapter mAdapter_checked;
     private RecyclerView.LayoutManager mLayoutManager;
     private static String LOG_TAG = "RecyclerViewActivity";
 
@@ -56,14 +58,21 @@ public class ToDoFragment_RV extends Fragment {
         rootview = inflater.inflate(R.layout.fragment_to_do_rv, container, false);
 
         mRecyclerView = (RecyclerView) rootview.findViewById(R.id.rv);
+        mRecyclerView_checked = (RecyclerView) rootview.findViewById(R.id.rv_checked);
         mRecyclerView.setHasFixedSize(true);
+        mRecyclerView_checked.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
+        //mLayoutManager_checked = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView_checked.setLayoutManager(mLayoutManager);
         mAdapter = new MyRecyclerViewAdapter(getDataSet());
+        mAdapter_checked = new MyRecyclerViewAdapter(getDataSet_checked());
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView_checked.setAdapter(mAdapter_checked);
         RecyclerView.ItemDecoration itemDecoration =
                 new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
         mRecyclerView.addItemDecoration(itemDecoration);
+        mRecyclerView_checked.addItemDecoration(itemDecoration);
 
 
   //      setHasOptionsMenu(true);
@@ -89,14 +98,17 @@ public class ToDoFragment_RV extends Fragment {
         dataSource_todo.close();
 
         return arrayOfToDo;
+    }
 
+    private ArrayList<ToDo> getDataSet_checked() {
+        dataSource_todo = new ToDoDataSource(getContext());
+        dataSource_todo.open();
 
-        /*ArrayList results = new ArrayList<ToDo>();
-        for (int index = 0; index < 20; index++) {
-            ToDo obj = new ToDo("Some Primary Text " + index,"true", 122343545,1);
-            results.add(index, obj);
-        }
-        return results;*/
+        ArrayList<ToDo> arrayOfToDo = null;
+        arrayOfToDo = dataSource_todo.getToDoForList("true");
+        dataSource_todo.close();
+
+        return arrayOfToDo;
     }
 
 
