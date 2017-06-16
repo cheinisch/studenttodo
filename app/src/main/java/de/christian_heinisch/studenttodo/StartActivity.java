@@ -139,7 +139,7 @@ public class StartActivity extends AppCompatActivity
 
         titelleiste(getString(R.string.todo_title));
 
-        Fragment f = new ToDoFragment();
+        Fragment f = new ToDoFragment_RV();
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(R.id.content_start, f);
