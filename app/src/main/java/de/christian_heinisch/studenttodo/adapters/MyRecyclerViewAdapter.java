@@ -1,13 +1,19 @@
 package de.christian_heinisch.studenttodo.adapters;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,7 +21,10 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import de.christian_heinisch.studenttodo.R;
+import de.christian_heinisch.studenttodo.StartActivity;
+import de.christian_heinisch.studenttodo.ToDoFragment_RV;
 import de.christian_heinisch.studenttodo.database.ToDo;
+import de.christian_heinisch.studenttodo.database.ToDoDataSource;
 
 /**
  * Created by chris on 16.06.2017.
@@ -27,6 +36,12 @@ public class MyRecyclerViewAdapter extends RecyclerView
     private static String LOG_TAG = "MyRecyclerViewAdapter";
     private ArrayList<ToDo> mDataset;
     private static MyClickListener myClickListener;
+    private int newposition;
+    private Context mContext;
+    StartActivity startActivity;
+
+    DataObjectHolder holderdummy;
+    ToDoDataSource dataSource = new ToDoDataSource(mContext);
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder
             implements View
@@ -44,6 +59,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
             checked = (CheckBox) itemView.findViewById(R.id.cbToDo);
             Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
+
         }
 
         @Override
@@ -54,10 +70,12 @@ public class MyRecyclerViewAdapter extends RecyclerView
 
     public void setOnItemClickListener(MyClickListener myClickListener) {
         this.myClickListener = myClickListener;
+
     }
 
-    public MyRecyclerViewAdapter(ArrayList<ToDo> myDataset) {
+    public MyRecyclerViewAdapter( Context context, ArrayList<ToDo> myDataset) {
         mDataset = myDataset;
+        mContext = context;
     }
 
     @Override
@@ -70,14 +88,52 @@ public class MyRecyclerViewAdapter extends RecyclerView
         return dataObjectHolder;
     }
 
+    public void onChilddraw(){
+
+    }
+
     @Override
-    public void onBindViewHolder(DataObjectHolder holder, int position) {
+    public void onBindViewHolder(final DataObjectHolder holder, int position) {
         holder.label.setText(mDataset.get(position).getToDo());
         holder.dateTime.setText(getDate(mDataset.get(position).isDate()));
         if(mDataset.get(position).isChecked().equalsIgnoreCase("true")){
             holder.checked.toggle();
         }
+        //in some cases, it will prevent unwanted situations
+        holder.checked.setOnCheckedChangeListener(null);
+
+        // Set onClicklistener
+        holder.label.setOnClickListener(null);
+        newposition = position;
+        holderdummy = holder;
+
+        holder.checked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                //set your object's last status
+                dataSource = new ToDoDataSource(mContext);
+                dataSource.open();
+                if(holderdummy.checked.isChecked()){
+                    dataSource.updateToDo(mDataset.get(newposition).getId(), mDataset.get(newposition).getToDo(), "true", mDataset.get(newposition).isDate());
+                }else{
+                    dataSource.updateToDo(mDataset.get(newposition).getId(), mDataset.get(newposition).getToDo(), "false", mDataset.get(newposition).isDate());
+                }
+                dataSource.close();
+
+                // Läd das Fragment neu
+
+                Fragment f = new ToDoFragment_RV();
+                FragmentManager fragmentManager;
+                fragmentManager =((Activity) mContext).getFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.replace(R.id.content_start, f);
+                ft.addToBackStack(null);
+                ft.commit();
+            }
+        });
     }
+
 
 
     public void addItem(ToDo dataObj, int index) {

@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -39,10 +40,10 @@ public class ToDoFragment_RV extends Fragment {
 
     private ToDoDataSource dataSource_todo;
     private RecyclerView mRecyclerView;
-    private RecyclerView mRecyclerView_checked;
+    private RecyclerView new_mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.Adapter mAdapter_checked;
     private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.LayoutManager new_mLayoutManager;
     private static String LOG_TAG = "RecyclerViewActivity";
 
 
@@ -58,22 +59,24 @@ public class ToDoFragment_RV extends Fragment {
         rootview = inflater.inflate(R.layout.fragment_to_do_rv, container, false);
 
         mRecyclerView = (RecyclerView) rootview.findViewById(R.id.rv);
-        mRecyclerView_checked = (RecyclerView) rootview.findViewById(R.id.rv_checked);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView_checked.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
-        //mLayoutManager_checked = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView_checked.setLayoutManager(mLayoutManager);
-        mAdapter = new MyRecyclerViewAdapter(getDataSet());
-        mAdapter_checked = new MyRecyclerViewAdapter(getDataSet_checked());
+        mAdapter = new MyRecyclerViewAdapter(getContext(), getDataSet());
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView_checked.setAdapter(mAdapter_checked);
         RecyclerView.ItemDecoration itemDecoration =
                 new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
         mRecyclerView.addItemDecoration(itemDecoration);
-        mRecyclerView_checked.addItemDecoration(itemDecoration);
 
+        new_mRecyclerView = (RecyclerView) rootview.findViewById(R.id.rv_checked);
+        new_mRecyclerView.setHasFixedSize(true);
+        new_mLayoutManager = new LinearLayoutManager(getContext());
+        new_mRecyclerView.setLayoutManager(new_mLayoutManager);
+        mAdapter = new MyRecyclerViewAdapter(getContext(), getDataSet_checked());
+        new_mRecyclerView.setAdapter(mAdapter);
+        RecyclerView.ItemDecoration newitemDecoration =
+                new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
+        new_mRecyclerView.addItemDecoration(newitemDecoration);
 
   //      setHasOptionsMenu(true);
 
@@ -110,14 +113,27 @@ public class ToDoFragment_RV extends Fragment {
 
         return arrayOfToDo;
     }
+/*
+    private void setUpItemTouchHelper() {
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
 
-    private String getDate(long time) {
-        Calendar cal = Calendar.getInstance(Locale.GERMAN);
-        cal.setTimeInMillis(time);
-        String date = DateFormat.format("dd.MM.yyyy", cal).toString();
-        return date;
-    }
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                int swipedPosition = viewHolder.getAdapterPosition();
+                RecyclerView.Adapter adapter =  mRecyclerView.getAdapter();
+                mRecyclerView.rem
+            }
+
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
+    }*/
+
 
 
 }
