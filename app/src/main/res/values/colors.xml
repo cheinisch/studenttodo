@@ -3,4 +3,6 @@
     <color name="colorPrimary">#ed4f46</color>
     <color name="colorPrimaryDark">#ed4f46</color>
     <color name="colorAccent">#12b0b9</color>
+
+    <color name="swipebg">#cc3333</color>
 </resources>

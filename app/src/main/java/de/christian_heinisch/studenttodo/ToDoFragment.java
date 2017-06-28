@@ -4,24 +4,19 @@ package de.christian_heinisch.studenttodo;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.widget.FloatingActionButton;
-import android.text.format.DateFormat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
 
+import de.christian_heinisch.studenttodo.adapters.RVAdapter;
+import de.christian_heinisch.studenttodo.adapters.SwipeUtil;
 import de.christian_heinisch.studenttodo.database.ToDo;
-import de.christian_heinisch.studenttodo.database.ToDoAdapter;
 import de.christian_heinisch.studenttodo.database.ToDoDataSource;
 
 
@@ -31,162 +26,131 @@ import de.christian_heinisch.studenttodo.database.ToDoDataSource;
 public class ToDoFragment extends Fragment {
 
 
-    View rootview;
+    private RecyclerView mRecyclerView;
+    private RecyclerView mRecyclerViewErledigt;
     private ToDoDataSource dataSource_todo;
-    private ListView listView;
 
     public ToDoFragment() {
-        // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        rootview = inflater.inflate(R.layout.fragment_to_do, container, false);
-        setHasOptionsMenu(true);
+        View mView = inflater.inflate(R.layout.fragment_to_do, container, false);
+        mRecyclerView = (RecyclerView) mView.findViewById(R.id.recyclerView);
+        mRecyclerViewErledigt = (RecyclerView) mView.findViewById(R.id.recyclerViewErledigt);
 
-        FloatingActionButton fab = (FloatingActionButton) rootview.findViewById(R.id.fbToDoAdd);
+        FloatingActionButton fab = (FloatingActionButton) mView.findViewById(R.id.fbToDoAdd);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Test");
                 ((StartActivity)getContext()).DialogAddToDO();
             }
         });
 
-
-
-        getToDoList();
-
-        return rootview;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.delete_todo, menu);
-        super.onCreateOptionsMenu(menu,inflater);
+        return mView;
     }
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    public void onResume() {
+        super.onResume();
+        // Recyclerview für noch zu erledigende Listenelemente
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_delete_todo) {
-            System.out.println("LSCHEN");
+        RVAdapter rvAdapter = new RVAdapter(getContext(), getData("false"));
+        mRecyclerView.setAdapter(rvAdapter);
 
-            return true;
+        setSwipeForRecyclerView();
 
-        }
 
-        return super.onOptionsItemSelected(item);
+        // Recyclerview für erledigte Listenelemente
+        LinearLayoutManager linearLayoutManagerErledigt = new LinearLayoutManager(getActivity());
+        linearLayoutManagerErledigt.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerViewErledigt.setLayoutManager(linearLayoutManagerErledigt);
+
+        RVAdapter rvAdapterErledigt = new RVAdapter(getContext(), getData("true"));
+        mRecyclerViewErledigt.setAdapter(rvAdapterErledigt);
+
+        setSwipeForRecyclerViewErledigt();
+
+
     }
 
-
-
-    public void getToDoList(){
+    private ArrayList<ToDo> getData(String checked) {
         dataSource_todo = new ToDoDataSource(getContext());
-
-
-        System.out.println("Die Datenquelle wird geöffnet.");
         dataSource_todo.open();
 
-        //dataSource_todo.createToDo("Dummy", "true", 20170505);
-
-        showAllToDo();
-        showAllNotToDo();
-
-        System.out.println("Die Datenquelle wird geschlossen.");
+        ArrayList<ToDo> arrayOfToDo = null;
+        arrayOfToDo = dataSource_todo.getToDoForList(checked);
         dataSource_todo.close();
+
+        return arrayOfToDo;
     }
 
-    public void showAllToDo () {
+    private void setSwipeForRecyclerView() {
 
-        ArrayList<ToDo> arrayOfToDo = null;
-        arrayOfToDo = dataSource_todo.getToDoForList("false");
-
-        ToDoAdapter adapter = new ToDoAdapter(getActivity(), arrayOfToDo);
-
-        listView = (ListView) rootview.findViewById(R.id.listViewToDo);
-        listView.setAdapter(adapter);
-        /*Fix für die Höhe*/
-        setListViewHeightBasedOnChildren(listView);
-
-        /*OnClick Listener*/
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("Knobb gedrückt");
-
-
-
+        SwipeUtil swipeHelper = new SwipeUtil(0, ItemTouchHelper.LEFT, getActivity()) {
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int swipedPosition = viewHolder.getAdapterPosition();
+                RVAdapter adapter = (RVAdapter) mRecyclerView.getAdapter();
+                adapter.pendingRemoval(swipedPosition);
             }
-        });
-    }
 
-    public void showAllNotToDo () {
-
-        ArrayList<ToDo> arrayOfToDo = null;
-        arrayOfToDo = dataSource_todo.getToDoForList("true");
-
-        ToDoAdapter adapter = new ToDoAdapter(getActivity(), arrayOfToDo);
-
-        listView = (ListView) rootview.findViewById(R.id.listViewNotToDo);
-        listView.setAdapter(adapter);
-        /*Fix für die Höhe*/
-        setListViewHeightBasedOnChildren(listView);
-
-        /*OnClick Listener*/
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("Knobb gedrückt");
-
-
-
+            @Override
+            public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                int position = viewHolder.getAdapterPosition();
+                RVAdapter adapter = (RVAdapter) mRecyclerView.getAdapter();
+                if (adapter.isPendingRemoval(position)) {
+                    return 0;
+                }
+                return super.getSwipeDirs(recyclerView, viewHolder);
             }
-        });
+        };
+
+        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(swipeHelper);
+        mItemTouchHelper.attachToRecyclerView(mRecyclerView);
+
+        //set swipe label
+        swipeHelper.setLeftSwipeLable("Löschen");
+        //set swipe background-Color
+        swipeHelper.setLeftcolorCode(ContextCompat.getColor(getActivity(), R.color.swipebg));
+
     }
 
-    /**** Method for Setting the Height of the ListView dynamically.
-     **** Hack to fix the issue of not showing all the items of the ListView
-     **** when placed inside a ScrollView  ****/
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null)
-            return;
+    private void setSwipeForRecyclerViewErledigt() {
 
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-        int totalHeight = 0;
-        int x = listAdapter.getCount();
-        View view = null;
-        for (int i = 0; i < x; i++) {
-            view = listAdapter.getView(i, view, listView);
-            if (i == 0)
-                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, LinearLayout.LayoutParams.WRAP_CONTENT));
+        SwipeUtil swipeHelper = new SwipeUtil(0, ItemTouchHelper.LEFT, getActivity()) {
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int swipedPosition = viewHolder.getAdapterPosition();
+                RVAdapter adapter = (RVAdapter) mRecyclerViewErledigt.getAdapter();
+                adapter.pendingRemoval(swipedPosition);
+            }
 
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += view.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount()));
-        listView.setLayoutParams(params);
+            @Override
+            public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                int position = viewHolder.getAdapterPosition();
+                RVAdapter adapter = (RVAdapter) mRecyclerViewErledigt.getAdapter();
+                if (adapter.isPendingRemoval(position)) {
+                    return 0;
+                }
+                return super.getSwipeDirs(recyclerView, viewHolder);
+            }
+        };
+
+        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(swipeHelper);
+        mItemTouchHelper.attachToRecyclerView(mRecyclerViewErledigt);
+
+        //set swipe label
+        swipeHelper.setLeftSwipeLable("Löschen");
+        //set swipe background-Color
+        swipeHelper.setLeftcolorCode(ContextCompat.getColor(getActivity(), R.color.swipebg));
+
     }
-
-    private String getDate(long time) {
-        Calendar cal = Calendar.getInstance(Locale.GERMAN);
-        cal.setTimeInMillis(time);
-        String date = DateFormat.format("dd.MM.yyyy", cal).toString();
-        return date;
-    }
-
 
 }
+

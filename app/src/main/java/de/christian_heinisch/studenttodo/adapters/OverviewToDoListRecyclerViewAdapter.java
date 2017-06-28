@@ -21,7 +21,6 @@ import java.util.Locale;
 import de.christian_heinisch.studenttodo.R;
 import de.christian_heinisch.studenttodo.StartActivity;
 import de.christian_heinisch.studenttodo.StartFragment;
-import de.christian_heinisch.studenttodo.ToDoFragment_RV;
 import de.christian_heinisch.studenttodo.database.ToDo;
 import de.christian_heinisch.studenttodo.database.ToDoDataSource;
 

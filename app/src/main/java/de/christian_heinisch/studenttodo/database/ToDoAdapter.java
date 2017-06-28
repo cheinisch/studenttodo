@@ -2,7 +2,9 @@ package de.christian_heinisch.studenttodo.database;
 
 import android.content.Context;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -98,7 +100,6 @@ public class ToDoAdapter  extends ArrayAdapter<ToDo> {
                 ((StartActivity)getContext()).todo();
             }
         });
-
 
 
         return convertView;

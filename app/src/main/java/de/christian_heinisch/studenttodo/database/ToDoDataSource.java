@@ -218,14 +218,24 @@ public class ToDoDataSource {
         return todo;
     }
 
-    public ArrayList<ToDo> getToDoForList(String checked){
+    public ArrayList<ToDo> getToDoForList(String checked) {
         ArrayList<ToDo> listitems = new ArrayList<ToDo>();
 
-        Cursor cursor = database.query(StudentToDoDbHelper.TABLE_TODO_LIST,
-                columns, "checked = ?",new String[]{checked}, null, null, null);
+        Cursor cursor;
+        String sqlQry;
+        if(checked.equalsIgnoreCase("alle")){
+            cursor = database.query(StudentToDoDbHelper.TABLE_TODO_LIST,
+                    columns, null, null, null, null, null);
 
-        String sqlQry = SQLiteQueryBuilder.buildQueryString(false, StudentToDoDbHelper.TABLE_TODO_LIST,
-                columns, "checked = " + checked,null, null, null, null);
+            sqlQry = SQLiteQueryBuilder.buildQueryString(false, StudentToDoDbHelper.TABLE_TODO_LIST,
+                    columns, null, null, null, null, null);
+        }else{
+            cursor = database.query(StudentToDoDbHelper.TABLE_TODO_LIST,
+                    columns, "checked = ?", new String[]{checked}, null, null, null);
+
+            sqlQry = SQLiteQueryBuilder.buildQueryString(false, StudentToDoDbHelper.TABLE_TODO_LIST,
+                    columns, "checked = " + checked, null, null, null, null);
+        }
 
         Log.i(LOG_TAG, sqlQry);
 

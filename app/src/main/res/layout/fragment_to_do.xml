@@ -1,10 +1,12 @@
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="de.christian_heinisch.studenttodo.ToDoFragment">
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -12,39 +14,38 @@
         android:layout_height="match_parent"
         android:padding="@dimen/padding">
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/todo_todo_title"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+        <TextView
+            android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="@string/todo_finish_title"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/todo_todo_title"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewErledigt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <ListView
-                android:id="@+id/listViewToDo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        </android.support.v7.widget.RecyclerView>
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/todo_finish_title"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
-
-            <ListView
-                android:id="@+id/listViewNotToDo"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-            </ListView>
-
-        </LinearLayout>
+    </LinearLayout>
     </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
@@ -63,5 +64,4 @@
         app:layout_anchor="@+id/scrollView2"
         app:layout_anchorGravity="bottom|right"
         app:srcCompat="@color/colorAccent" />
-
 </android.support.design.widget.CoordinatorLayout>
