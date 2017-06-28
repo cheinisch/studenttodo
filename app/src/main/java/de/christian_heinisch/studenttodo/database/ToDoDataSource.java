@@ -242,45 +242,5 @@ public class ToDoDataSource {
 
         return listitems;
     }
-/*
-    public List<ToDo> getAllToDoChecked(long cityid) {
-        List<ToDo> todoList = new ArrayList<>();
-
-        Cursor cursor = database.query(StudentToDoDbHelper.TABLE_TODO_LIST,
-                columns, "cityid = " + cityid + " and buy = ?",new String[]{"false"}, null, null, null);
-
-        cursor.moveToFirst();
-        ToDo todo;
-
-        while (!cursor.isAfterLast()) {
-            todo = cursorToToDo(cursor);
-            todoList.add(todo);
-            cursor.moveToNext();
-        }
-
-        cursor.close();
-
-        return todoList;
-    }
-    public List<ToDo> getAllToDoBuy(long cityid) {
-        List<ToDo> todoList = new ArrayList<>();
-
-        Cursor cursor = database.query(StudentToDoDbHelper.TABLE_TODO_LIST,
-                columns, "cityid = " + cityid + " and buy = ?",new String[]{"true"}, null, null, null);
-
-        cursor.moveToFirst();
-        ToDo todo;
-
-        while (!cursor.isAfterLast()) {
-            todo = cursorToToDo(cursor);
-            todoList.add(todo);
-            Log.d(LOG_TAG, "ID: " + todo.getId() + ", Inhalt: " + todo.toString());
-            cursor.moveToNext();
-        }
-
-        cursor.close();
-
-        return todoList;
-    }*/
 
 }

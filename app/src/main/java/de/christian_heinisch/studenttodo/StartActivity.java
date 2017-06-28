@@ -43,6 +43,10 @@ public class StartActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+        // Läd das Übersichtsfragment
+        startFragment();
+
     }
 
     @Override
@@ -87,7 +91,7 @@ public class StartActivity extends AppCompatActivity
 
         if (id == R.id.nav_overview) {
 
-            titelleiste("Übersicht");
+            startFragment();
 
         } else if (id == R.id.nav_meeting) {
 
@@ -122,6 +126,19 @@ public class StartActivity extends AppCompatActivity
     /*
     Fragmente
      */
+
+    public void startFragment() {
+
+        titelleiste(getString(R.string.app_name));
+
+        Fragment f = new StartFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(R.id.content_start, f);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
 
     public void about() {
 

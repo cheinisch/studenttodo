@@ -6,9 +6,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +28,10 @@ import de.christian_heinisch.studenttodo.database.ToDoDataSource;
  * Created by chris on 16.06.2017.
  */
 
-public class MyRecyclerViewAdapter extends RecyclerView
-        .Adapter<MyRecyclerViewAdapter
+public class ToDoListRecyclerViewAdapter extends RecyclerView
+        .Adapter<ToDoListRecyclerViewAdapter
         .DataObjectHolder> {
-    private static String LOG_TAG = "MyRecyclerViewAdapter";
+    private static String LOG_TAG = "ToDoListRecyclerViewAdapter";
     private ArrayList<ToDo> mDataset;
     private static MyClickListener myClickListener;
     private int newposition;
@@ -72,7 +70,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
 
     }
 
-    public MyRecyclerViewAdapter( Context context, ArrayList<ToDo> myDataset) {
+    public ToDoListRecyclerViewAdapter(Context context, ArrayList<ToDo> myDataset) {
         mDataset = myDataset;
         mContext = context;
     }

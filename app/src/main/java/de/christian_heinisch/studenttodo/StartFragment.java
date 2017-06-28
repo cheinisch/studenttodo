@@ -1,9 +1,8 @@
 package de.christian_heinisch.studenttodo;
 
 
-import android.app.Fragment;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,8 +20,7 @@ import de.christian_heinisch.studenttodo.database.ToDoDataSource;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ToDoFragment_RV extends Fragment {
-
+public class StartFragment extends Fragment {
 
     View rootview;
 
@@ -32,10 +30,9 @@ public class ToDoFragment_RV extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.LayoutManager new_mLayoutManager;
-    private static String LOG_TAG = "RecyclerViewActivity";
 
 
-    public ToDoFragment_RV() {
+    public StartFragment() {
         // Required empty public constructor
     }
 
@@ -44,9 +41,9 @@ public class ToDoFragment_RV extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootview = inflater.inflate(R.layout.fragment_to_do_rv, container, false);
+        rootview = inflater.inflate(R.layout.fragment_start, container, false);
 
-        mRecyclerView = (RecyclerView) rootview.findViewById(R.id.rv);
+        mRecyclerView = (RecyclerView) rootview.findViewById(R.id.rvOverviewToDo);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -55,27 +52,6 @@ public class ToDoFragment_RV extends Fragment {
         RecyclerView.ItemDecoration itemDecoration =
                 new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
         mRecyclerView.addItemDecoration(itemDecoration);
-
-        new_mRecyclerView = (RecyclerView) rootview.findViewById(R.id.rv_checked);
-        new_mRecyclerView.setHasFixedSize(true);
-        new_mLayoutManager = new LinearLayoutManager(getContext());
-        new_mRecyclerView.setLayoutManager(new_mLayoutManager);
-        mAdapter = new ToDoListRecyclerViewAdapter(getContext(), getDataSet_checked());
-        new_mRecyclerView.setAdapter(mAdapter);
-        RecyclerView.ItemDecoration newitemDecoration =
-                new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
-        new_mRecyclerView.addItemDecoration(newitemDecoration);
-
-  //      setHasOptionsMenu(true);
-
-        FloatingActionButton fab = (FloatingActionButton) rootview.findViewById(R.id.fbToDoAdd);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((StartActivity)getContext()).DialogAddToDO();
-            }
-        });
-
 
         return rootview;
     }
@@ -90,17 +66,5 @@ public class ToDoFragment_RV extends Fragment {
 
         return arrayOfToDo;
     }
-
-    private ArrayList<ToDo> getDataSet_checked() {
-        dataSource_todo = new ToDoDataSource(getContext());
-        dataSource_todo.open();
-
-        ArrayList<ToDo> arrayOfToDo = null;
-        arrayOfToDo = dataSource_todo.getToDoForList("true");
-        dataSource_todo.close();
-
-        return arrayOfToDo;
-    }
-
 
 }
