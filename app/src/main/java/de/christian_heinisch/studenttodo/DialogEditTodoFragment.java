@@ -63,7 +63,7 @@ public class DialogEditTodoFragment extends DialogFragment {
 
         return new AlertDialog.Builder(getActivity())
                 .setView(rootview)
-                .setTitle(R.string.todo_add_title)
+                .setTitle(R.string.todo_edit_title)
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

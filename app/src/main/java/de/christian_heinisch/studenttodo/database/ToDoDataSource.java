@@ -198,7 +198,6 @@ public class ToDoDataSource {
         Calendar cal = Calendar.getInstance(Locale.GERMAN);
         cal.setTimeInMillis(time);
         String datenew = DateFormat.format("dd.MM.yyyy", cal).toString();
-        System.out.println("DATUM: " + datenew);
         return datenew;
     }
 

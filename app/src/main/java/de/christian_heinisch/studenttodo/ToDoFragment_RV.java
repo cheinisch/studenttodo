@@ -113,27 +113,6 @@ public class ToDoFragment_RV extends Fragment {
 
         return arrayOfToDo;
     }
-/*
-    private void setUpItemTouchHelper() {
-        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                int swipedPosition = viewHolder.getAdapterPosition();
-                RecyclerView.Adapter adapter =  mRecyclerView.getAdapter();
-                mRecyclerView.rem
-            }
-
-        };
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(mRecyclerView);
-    }*/
-
 
 
 }

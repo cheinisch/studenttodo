@@ -18,11 +18,13 @@
     <string name="todo_finish_title">Schon erledigt</string>
     <string name="action_delete_todo">löschen</string>
 
-    <!-- To Do Add -->
+    <!-- To Do Add / Edit -->
     <string name="todo_add_title">Neue Aufgabe</string>
     <string name="todo_add_beschreibung">Aufgabe</string>
     <string name="todo_add_beschreibung_edit">Aufgabenname</string>
     <string name="todo_add_datum">Bis wann zu erledigen</string>
+
+    <string name="todo_edit_title">Aufgabe bearbeiten</string>
 
     <!-- Geld -->
     <string name="money_title">Mein Geld</string>

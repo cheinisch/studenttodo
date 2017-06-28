@@ -57,8 +57,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
             label = (TextView) itemView.findViewById(R.id.textView_item_todolist_content);
             dateTime = (TextView) itemView.findViewById(R.id.textView_item_todolist_Date);
             checked = (CheckBox) itemView.findViewById(R.id.cbToDo);
-            Log.i(LOG_TAG, "Adding Listener");
-            itemView.setOnClickListener(this);
+            //itemView.setOnClickListener(this);
 
         }
 
@@ -102,10 +101,28 @@ public class MyRecyclerViewAdapter extends RecyclerView
         //in some cases, it will prevent unwanted situations
         holder.checked.setOnCheckedChangeListener(null);
 
-        // Set onClicklistener
-        holder.label.setOnClickListener(null);
+
+
         newposition = position;
         holderdummy = holder;
+
+
+        // Set onClicklistener
+        holder.label.setOnLongClickListener(new View.OnLongClickListener() {
+            public boolean onLongClick(View view) {
+                edit(mDataset.get(newposition).getId());
+                return false;
+            }
+
+        });
+
+        holder.dateTime.setOnLongClickListener(new View.OnLongClickListener() {
+            public boolean onLongClick(View view) {
+                edit(mDataset.get(newposition).getId());
+                return false;
+            }
+
+        });
 
         holder.checked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -161,6 +178,12 @@ public class MyRecyclerViewAdapter extends RecyclerView
         cal.setTimeInMillis(time);
         String date = DateFormat.format("dd.MM.yyyy", cal).toString();
         return date;
+    }
+
+    private void edit(long l){
+
+        ((StartActivity)mContext).DialogEditToDO(l);
+
     }
 
 
