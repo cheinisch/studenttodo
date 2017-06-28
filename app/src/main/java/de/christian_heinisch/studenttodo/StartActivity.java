@@ -129,7 +129,7 @@ public class StartActivity extends AppCompatActivity
 
     public void startFragment() {
 
-        titelleiste(getString(R.string.app_name));
+        titelleiste(getString(R.string.overview_title));
 
         Fragment f = new StartFragment();
         FragmentManager fragmentManager = getFragmentManager();

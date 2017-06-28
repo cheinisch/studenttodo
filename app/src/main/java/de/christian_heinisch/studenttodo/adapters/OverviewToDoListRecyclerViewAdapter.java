@@ -20,6 +20,7 @@ import java.util.Locale;
 
 import de.christian_heinisch.studenttodo.R;
 import de.christian_heinisch.studenttodo.StartActivity;
+import de.christian_heinisch.studenttodo.StartFragment;
 import de.christian_heinisch.studenttodo.ToDoFragment_RV;
 import de.christian_heinisch.studenttodo.database.ToDo;
 import de.christian_heinisch.studenttodo.database.ToDoDataSource;
@@ -28,8 +29,8 @@ import de.christian_heinisch.studenttodo.database.ToDoDataSource;
  * Created by chris on 16.06.2017.
  */
 
-public class ToDoListRecyclerViewAdapter extends RecyclerView
-        .Adapter<ToDoListRecyclerViewAdapter
+public class OverviewToDoListRecyclerViewAdapter extends RecyclerView
+        .Adapter<OverviewToDoListRecyclerViewAdapter
         .DataObjectHolder> {
     private static String LOG_TAG = "ToDoListRecyclerViewAdapter";
     private ArrayList<ToDo> mDataset;
@@ -70,7 +71,7 @@ public class ToDoListRecyclerViewAdapter extends RecyclerView
 
     }
 
-    public ToDoListRecyclerViewAdapter(Context context, ArrayList<ToDo> myDataset) {
+    public OverviewToDoListRecyclerViewAdapter(Context context, ArrayList<ToDo> myDataset) {
         mDataset = myDataset;
         mContext = context;
     }
@@ -96,7 +97,7 @@ public class ToDoListRecyclerViewAdapter extends RecyclerView
         if(mDataset.get(position).isChecked().equalsIgnoreCase("true")){
             holder.checked.toggle();
         }
-
+        //in some cases, it will prevent unwanted situations
         holderdummy = holder;
 
 
@@ -138,7 +139,7 @@ public class ToDoListRecyclerViewAdapter extends RecyclerView
 
                 // Läd das Fragment neu
 
-                Fragment f = new ToDoFragment_RV();
+                Fragment f = new StartFragment();
                 FragmentManager fragmentManager;
                 fragmentManager =((Activity) mContext).getFragmentManager();
                 FragmentTransaction ft = fragmentManager.beginTransaction();

@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import de.christian_heinisch.studenttodo.adapters.ToDoListRecyclerViewAdapter;
+import de.christian_heinisch.studenttodo.adapters.OverviewToDoListRecyclerViewAdapter;
 import de.christian_heinisch.studenttodo.database.ToDo;
 import de.christian_heinisch.studenttodo.database.ToDoDataSource;
 
@@ -47,7 +47,7 @@ public class StartFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new ToDoListRecyclerViewAdapter(getContext(), getDataSet());
+        mAdapter = new OverviewToDoListRecyclerViewAdapter(getContext(), getDataSet());
         mRecyclerView.setAdapter(mAdapter);
         RecyclerView.ItemDecoration itemDecoration =
                 new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);

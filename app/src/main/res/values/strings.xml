@@ -8,6 +8,9 @@
 
     <!-- Übersicht -->
     <string name="overview_title">Übersicht</string>
+    <string name="overview_money_aktuell">Aktuelles Guthaben</string>
+    <string name="overview_money_einnahmen">Einnahmen</string>
+    <string name="overview_money_ausgaben">Ausgaben</string>
 
     <!-- Termine -->
     <string name="date_title">Termine</string>
