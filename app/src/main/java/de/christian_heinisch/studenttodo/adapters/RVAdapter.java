@@ -195,4 +195,5 @@ public class RVAdapter extends RecyclerView.Adapter<ItemViewHolder> {
         ((StartActivity)mContext).DialogEditToDO(l);
 
     }
+
 }
