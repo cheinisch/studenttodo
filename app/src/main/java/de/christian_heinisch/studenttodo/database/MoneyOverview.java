@@ -6,20 +6,20 @@ package de.christian_heinisch.studenttodo.database;
 
 public class MoneyOverview {
 
-    private double aeuro;
-    private double geuro;
-    private double eeuro;
+    private double ausgabeEuro;
+    private double gesamtEuro;
+    private double einnahmeEuro;
     private long id;
     private String date;
 
 
 
-    public MoneyOverview(long id, double geuro, double aeuro, double eeuro, String date){
+    public MoneyOverview(long id, double gesamtEuro, double ausgabeEuro, double einnahmeEuro, String date){
 
         this.id = id;
-        this.geuro = geuro;
-        this.aeuro = aeuro;
-        this.eeuro = eeuro;
+        this.gesamtEuro = gesamtEuro;
+        this.ausgabeEuro = ausgabeEuro;
+        this.einnahmeEuro = einnahmeEuro;
         this.date = date;
 
     }
@@ -33,27 +33,27 @@ public class MoneyOverview {
     }
 
     public double getaEuro() {
-        return aeuro;
+        return ausgabeEuro;
     }
 
     public void setaEuro(double aeuro) {
-        this.aeuro = aeuro;
+        this.ausgabeEuro = aeuro;
     }
 
     public double geteEuro() {
-        return eeuro;
+        return einnahmeEuro;
     }
 
     public void seteEuro(double eeuro) {
-        this.eeuro = eeuro;
+        this.einnahmeEuro = eeuro;
     }
 
     public double getgEuro() {
-        return geuro;
+        return gesamtEuro;
     }
 
     public void setgEuro(double geuro) {
-        this.geuro = geuro;
+        this.gesamtEuro = geuro;
     }
 
     public String getDate() {

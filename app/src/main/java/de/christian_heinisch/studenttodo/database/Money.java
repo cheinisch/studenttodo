@@ -13,15 +13,11 @@ public class Money {
 
 
 
-    public Money(long id, double euro, String date, String art){
+    public Money(long id, double euro, String date, String art) {
 
         this.id = id;
         this.euro = euro;
-        this.date = date;
-        this.art = art;
-
     }
-
     public long getId(){
         return id;
     }

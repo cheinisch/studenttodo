@@ -1,87 +1,108 @@
 package de.christian_heinisch.studenttodo.adapters;
 
+/**
+ * Created by chris on 28.06.2017.
+ */
+
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Context;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+import java.text.DateFormatSymbols;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
+
+import de.christian_heinisch.studenttodo.MoneyFragment;
 import de.christian_heinisch.studenttodo.R;
+import de.christian_heinisch.studenttodo.StartActivity;
 import de.christian_heinisch.studenttodo.database.Money;
 import de.christian_heinisch.studenttodo.database.MoneyOverview;
+import de.christian_heinisch.studenttodo.database.ToDoDataSource;
 
-/**
- * Created by chris on 29.06.2017.
- */
+;
 
-import android.util.Log;
+public class RVMoneyAdapter extends RecyclerView.Adapter<MoneyObjectHolder> {
 
-import java.util.ArrayList;
-
-public class RVMoneyAdapter extends RecyclerView
-        .Adapter<RVMoneyAdapter
-        .DataObjectHolder> {
-    private static String LOG_TAG = "MyRecyclerViewAdapter";
+    private ArrayList<String> itemsPendingRemoval;
     private ArrayList<MoneyOverview> mDataset;
-    private static MyClickListener myClickListener;
+    private Context mContext;
 
-    public static class DataObjectHolder extends RecyclerView.ViewHolder
-            implements View
-            .OnClickListener {
-        TextView gesamt;
-        TextView einnahmen;
-        TextView ausgaben;
-        TextView dateTime;
+    ToDoDataSource dataSource = new ToDoDataSource(mContext);
 
-        public DataObjectHolder(View itemView) {
-            super(itemView);
-            gesamt = (TextView) itemView.findViewById(R.id.textViewMoneyOverviewGesamt);
-            einnahmen = (TextView) itemView.findViewById(R.id.textViewMoneyOverviewEinnahme);
-            ausgaben = (TextView) itemView.findViewById(R.id.textViewMoneyOverviewAusgaben);
-            dateTime = (TextView) itemView.findViewById(R.id.textView2);
-            Log.i(LOG_TAG, "Adding Listener");
-            itemView.setOnClickListener(this);
-        }
+    private static final int PENDING_REMOVAL_TIMEOUT = 3000; // 3sec
+    private Handler handler = new Handler(); // hanlder for running delayed runnables
+    HashMap<String, Runnable> pendingRunnables = new HashMap<>(); // map of items to pending runnables, so we can cancel a removal if need be
 
-        @Override
-        public void onClick(View v) {
-            myClickListener.onItemClick(getAdapterPosition(), v);
-        }
-    }
 
-    public void setOnItemClickListener(MyClickListener myClickListener) {
-        this.myClickListener = myClickListener;
-    }
-
-    public RVMoneyAdapter(ArrayList<MoneyOverview> myDataset) {
+    public RVMoneyAdapter(Context context, ArrayList<MoneyOverview> myDataset) {
         mDataset = myDataset;
+        mContext = context;
+        itemsPendingRemoval = new ArrayList<>();
     }
 
     @Override
-    public DataObjectHolder onCreateViewHolder(ViewGroup parent,
-                                               int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cardview, parent, false);
-
-        DataObjectHolder dataObjectHolder = new DataObjectHolder(view);
-        return dataObjectHolder;
+    public MoneyObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, parent, false);
+        return new MoneyObjectHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(DataObjectHolder holder, int position) {
-        holder.gesamt.setText(mDataset.get(position).getgEuro() + " €");
-        holder.einnahmen.setText(mDataset.get(position).geteEuro() + " €");
-        holder.ausgaben.setText(mDataset.get(position).getaEuro() + " €");
-    }
+    public void onBindViewHolder(final MoneyObjectHolder holder, final int position) {
 
-    public void addItem(MoneyOverview dataObj, int index) {
-        mDataset.add(index, dataObj);
-        notifyItemInserted(index);
-    }
+        final String gesamt = mDataset.get(position).getgEuro() + " €";
+        final String einnahme = mDataset.get(position).geteEuro() + " €";
+        final String ausgabe = mDataset.get(position).getaEuro() + " €";
+        final String monat;
+        final String jahr;
 
-    public void deleteItem(int index) {
-        mDataset.remove(index);
-        notifyItemRemoved(index);
+        String[] splitResult = mDataset.get(position).getDate().split("-");
+        monat = getMonthForInt(Integer.parseInt(splitResult[1]));
+        jahr = splitResult[2];
+
+        holder.ItemEinnahmen.setText(einnahme);
+        holder.ItemGesamt.setText(gesamt);
+        holder.ItemAusgaben.setText(ausgabe);
+        holder.Monat.setText(monat);
+        holder.Jahr.setText(jahr);
+
+
+
+        /*if (itemsPendingRemoval.contains(data)) {
+            // {show swipe layout} and {hide regular layout}
+            holder.regularLayout.setVisibility(View.GONE);
+            holder.swipeLayout.setVisibility(View.VISIBLE);
+            holder.undo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    undoOpt(data);
+                }
+            });
+        } else {
+            // {show regular layout} and {hide swipe layout}
+            holder.regularLayout.setVisibility(View.VISIBLE);
+            holder.swipeLayout.setVisibility(View.GONE);
+            holder.listItem.setText(data);
+            holder.listItemDate.setText(date);
+            if(checkbox.equalsIgnoreCase("true")){
+                holder.checkbox.toggle();
+            }
+        }*/
+
+        /*holder.listItem.setOnLongClickListener(new View.OnLongClickListener() {
+            public boolean onLongClick(View view) {
+                edit(mDataset.get(position).getId());
+                return false;
+            }
+
+        });*/
     }
 
     @Override
@@ -89,7 +110,32 @@ public class RVMoneyAdapter extends RecyclerView
         return mDataset.size();
     }
 
-    public interface MyClickListener {
-        public void onItemClick(int position, View v);
+    private void reload(){
+
+        Fragment f = new MoneyFragment();
+        FragmentManager fragmentManager;
+        fragmentManager =((Activity) mContext).getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(R.id.content_start, f);
+        ft.addToBackStack(null);
+        ft.commit();
+
     }
+
+    private void edit(long l){
+
+        ((StartActivity)mContext).DialogEditToDO(l);
+
+    }
+
+    String getMonthForInt(int num) {
+        String month = "wrong";
+        DateFormatSymbols dfs = new DateFormatSymbols(Locale.GERMAN);
+        String[] months = dfs.getShortMonths();
+        if (num >= 0 && num <= 11 ) {
+            month = months[num];
+        }
+        return month;
+    }
+
 }
