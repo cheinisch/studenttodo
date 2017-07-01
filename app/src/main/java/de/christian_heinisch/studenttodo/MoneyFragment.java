@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import de.christian_heinisch.studenttodo.adapters.RVMoneyAdapter;
-import de.christian_heinisch.studenttodo.database.MoneyOverview;
+import de.christian_heinisch.studenttodo.database.Money;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,41 +55,25 @@ public class MoneyFragment extends Fragment {
 
     }
 
-    private ArrayList<MoneyOverview> getDataSet() {
+    private ArrayList<Money> getDataSet() {
 
         int startJahr = 2016;
         int endJahr = 2017;
         int count = 0;
-        ArrayList results = new ArrayList<MoneyOverview>();
+        ArrayList results = new ArrayList<Money>();
         for(int jahr = startJahr; jahr <= endJahr; jahr++){
 
             for(int monat =0; monat <= 11; monat++){
 
                 String newMonat = "01-"+monat+"-"+jahr;
 
-                MoneyOverview obj = new MoneyOverview(1, 453.25,25.30,450.00, newMonat);
+                Money obj = new Money(1, 453.25, 0,0, jahr, monat,0);
                 results.add(count, obj);
                 count = count+1;
             }
 
         }
-
-        /*ArrayList results = new ArrayList<MoneyOverview>();
-        for (int index = 0; index < 20; index++) {
-            MoneyOverview obj = new MoneyOverview(1, 453.25,25.30,450.00, "2017-06-30");
-            results.add(index, obj);
-        }*/
         return results;
-    }
-
-    String getMonthForInt(int num) {
-        String month = "wrong";
-        DateFormatSymbols dfs = new DateFormatSymbols(Locale.GERMAN);
-        String[] months = dfs.getShortMonths();
-        if (num >= 0 && num <= 11 ) {
-            month = months[num];
-        }
-        return month;
     }
 
 }

@@ -6,18 +6,29 @@ package de.christian_heinisch.studenttodo.database;
 
 public class Money {
 
-    private double euro;
+    private double Euro;
+    private double Einnahme;
+    private double Ausgabe;
     private long id;
     private String date;
-    private String art;
+    private int monat;
+    private int jahr;
+    private int tag;
 
 
 
-    public Money(long id, double euro, String date, String art) {
+    public Money(long id, double Euro, double einnahme, double ausgabe, int jahr, int monat, int tag){
 
         this.id = id;
-        this.euro = euro;
+        this.Euro = Euro;
+        this.Einnahme = einnahme;
+        this.Ausgabe = ausgabe;
+        this.monat = monat;
+        this.tag = tag;
+        this.jahr = jahr;
+
     }
+
     public long getId(){
         return id;
     }
@@ -27,27 +38,50 @@ public class Money {
     }
 
     public double getEuro() {
-        return euro;
+        return Euro;
     }
 
     public void setEuro(double euro) {
-        this.euro = euro;
+        this.Euro = euro;
     }
 
-    public String getDate() {
-        return date;
+    public double getEinnahme() {
+        return Einnahme;
     }
 
-    public void setDate(String monat) {
-        this.date = monat;
+    public void setEinnahme(double einnahme) {
+        Einnahme = einnahme;
     }
 
-    public String getArt() {
-        return art;
+    public void setAusgabe(double ausgabe) {
+        Ausgabe = ausgabe;
     }
 
-    public void setArt(String art) {
-        this.art = art;
+    public double getAusgabe() {
+        return Ausgabe;
     }
 
+    public int getJahr() {
+        return jahr;
+    }
+
+    public void setJahr(int jahr) {
+        this.jahr = jahr;
+    }
+
+    public int getMonat(){
+        return  monat;
+    }
+
+    public void setMonat(int monat) {
+        this.monat = monat;
+    }
+
+    public int getTag() {
+        return tag;
+    }
+
+    public void setTag(int tag) {
+        this.tag = tag;
+    }
 }
