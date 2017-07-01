@@ -1,12 +1,14 @@
 package de.christian_heinisch.studenttodo.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
 
 import java.util.ArrayList;
+
+import static de.christian_heinisch.studenttodo.database.StudentToDoDbHelper.TABLE_MONEY_LIST;
 
 /**
  * Created by chris on 01.07.2017.
@@ -42,14 +44,45 @@ public class MoneyDataSource {
         //Log.d(LOG_TAG, "Datenbank mit Hilfe des DbHelpers geschlossen.");
     }
 
+
+    public Money createMoney(double euro, int typ, String date) {
+
+        System.out.println("TYP vor verarbeitung " + typ);
+
+        ContentValues values = new ContentValues();
+        values.put(StudentToDoDbHelper.COLUMN_MONEY, euro);
+        values.put(StudentToDoDbHelper.COLUMN_MONEY_DATE, date);
+        values.put(StudentToDoDbHelper.COLUMN_MONEY_TYPE, typ);
+
+        System.out.println("TYP nach verarbeitung " + values.get(StudentToDoDbHelper.COLUMN_MONEY_TYPE));
+
+        String sql =
+                "INSERT INTO money_list (money, date, type) VALUES('"+euro+"','"+date+"','"+typ+"')" ;
+        database.execSQL(sql);
+        Money money = null;
+        return money;
+    }
+
+    public void deleteMoney(long id) {
+        database.delete(TABLE_MONEY_LIST,
+                StudentToDoDbHelper.COLUMN_ID + "=" + id,
+                null);
+
+        Log.d(LOG_TAG, "Eintrag gelöscht! ID: " + id);
+    }
+
+
     private Money cursorToMoney(Cursor cursor) {
         int idIndex = cursor.getColumnIndex(StudentToDoDbHelper.COLUMN_ID);
         int idMoney = cursor.getColumnIndex(StudentToDoDbHelper.COLUMN_MONEY);
         int idDate = cursor.getColumnIndex(StudentToDoDbHelper.COLUMN_MONEY_DATE);
         int idTYPE = cursor.getColumnIndex(StudentToDoDbHelper.COLUMN_MONEY_TYPE);
 
+
         double euro = cursor.getDouble(idMoney);
         String date = cursor.getString(idDate);
+        int typ = cursor.getInt(idTYPE);
+
 
         String[] parts = date.split("-");
         int jahr = Integer.parseInt(parts[0]);
@@ -58,32 +91,28 @@ public class MoneyDataSource {
 
         long id = cursor.getLong(idIndex);
 
-        Money money = new Money(id, euro, jahr ,monat, tag);
+        Money money = new Money(id, euro, euro, euro, jahr ,monat, tag, typ);
 
         return money;
     }
 
 
-    public ArrayList<Money> getMoneyforMonth(String date) {
+    public ArrayList<Money> getMoneyforMonth(String startdate, String enddate) {
         ArrayList<Money> listitems = new ArrayList<Money>();
+
 
         Cursor cursor;
         String sqlQry;
-            cursor = database.query(StudentToDoDbHelper.TABLE_TODO_LIST,
-                    columns, null, null, null, null, null);
+            cursor = database.rawQuery("SELECT * FROM money_list WHERE date BETWEEN date('"+startdate+"') AND date('"+enddate+"')", null);
 
-            sqlQry = SQLiteQueryBuilder.buildQueryString(false, StudentToDoDbHelper.TABLE_TODO_LIST,
-                    columns, null, null, null, null, null);
-
-
-        Log.i(LOG_TAG, sqlQry);
 
         cursor.moveToFirst();
         Money money;
 
         while (!cursor.isAfterLast()) {
             money = cursorToMoney(cursor);
-            listitems.add(new Money(money.getId(), money.getEuro(), money.getJahr(), money.getMonat(), money.getTag()));
+            listitems.add(new Money(money.getId(), money.getEuro(), money.getEinnahme(), money.getAusgabe(), money.getJahr(), money.getMonat(), money.getTag(), money.getTyp()));
+
             cursor.moveToNext();
         }
 

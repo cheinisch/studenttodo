@@ -29,7 +29,7 @@ import de.christian_heinisch.studenttodo.database.Money;
 import de.christian_heinisch.studenttodo.database.MoneyDataSource;
 
 
-public class RVMoneyAdapter extends RecyclerView.Adapter<MoneyObjectHolder> {
+public class RVMoneyDetailAdapter extends RecyclerView.Adapter<MoneyDetailObjectHolder> {
 
     private ArrayList<String> itemsPendingRemoval;
     private ArrayList<Money> mDataset;
@@ -42,57 +42,34 @@ public class RVMoneyAdapter extends RecyclerView.Adapter<MoneyObjectHolder> {
     HashMap<String, Runnable> pendingRunnables = new HashMap<>(); // map of items to pending runnables, so we can cancel a removal if need be
 
 
-    public RVMoneyAdapter(Context context, ArrayList<Money> myDataset) {
+    public RVMoneyDetailAdapter(Context context, ArrayList<Money> myDataset) {
         mDataset = myDataset;
         mContext = context;
         itemsPendingRemoval = new ArrayList<>();
     }
 
     @Override
-    public MoneyObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, parent, false);
-        return new MoneyObjectHolder(itemView);
+    public MoneyDetailObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.money_detail_item, parent, false);
+        return new MoneyDetailObjectHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final MoneyObjectHolder holder, final int position) {
+    public void onBindViewHolder(final MoneyDetailObjectHolder holder, final int position) {
 
-        final String gesamt = mDataset.get(position).getEuro() + " €";
-        final String einnahme = mDataset.get(position).getEinnahme() + " €";
-        final String ausgabe = mDataset.get(position).getAusgabe() + " €";
-        final String monat = getMonthForInt(mDataset.get(position).getMonat());
-        final int jahr = mDataset.get(position).getJahr();
-
-        holder.ItemEinnahmen.setText(einnahme);
+        final int typ = mDataset.get(position).getTyp();
+        final String gesamt;
+        if(typ == 1){
+            gesamt = mDataset.get(position).getEinnahme() + " €";
+            holder.TextDetail.setText("Einnahme");
+            holder.TextDetailAusgabe.setVisibility(View.GONE);
+        }else {
+            gesamt = "-"+mDataset.get(position).getAusgabe() + " €";
+            holder.TextDetail.setVisibility(View.GONE);
+            holder.TextDetailAusgabe.setText("Ausgabe");
+        }
         holder.ItemGesamt.setText(gesamt);
-        holder.ItemAusgaben.setText(ausgabe);
-        holder.Monat.setText(monat);
-        holder.Jahr.setText(jahr +"");
 
-        holder.card.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                newFragment(mDataset.get(position).getMonat(), mDataset.get(position).getJahr());
-            }
-        });
-
-    }
-
-    private void newFragment(int monat, int jahr) {
-
-
-        Bundle args = new Bundle();
-        args.putInt("monat", monat);
-        args.putInt("jahr", jahr);
-        Fragment f = new MoneyDetail();
-        FragmentManager fragmentManager;
-        fragmentManager =((Activity) mContext).getFragmentManager();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        f.setArguments(args);
-        ft.replace(R.id.content_start, f);
-        ft.addToBackStack(null);
-        ft.commit();
     }
 
     @Override
@@ -102,7 +79,7 @@ public class RVMoneyAdapter extends RecyclerView.Adapter<MoneyObjectHolder> {
 
     private void reload(){
 
-        Fragment f = new MoneyFragment();
+        Fragment f = new MoneyDetail();
         FragmentManager fragmentManager;
         fragmentManager =((Activity) mContext).getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();

@@ -15,6 +15,7 @@ import java.util.Locale;
 
 import de.christian_heinisch.studenttodo.adapters.RVMoneyAdapter;
 import de.christian_heinisch.studenttodo.database.Money;
+import de.christian_heinisch.studenttodo.database.MoneyDataSource;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +24,7 @@ public class MoneyFragment extends Fragment {
 
     View rootview;
     RecyclerView mRecyclerView;
+    private MoneyDataSource datasource;
 
 
     public MoneyFragment() {
@@ -37,6 +39,15 @@ public class MoneyFragment extends Fragment {
         rootview = inflater.inflate(R.layout.fragment_money, container, false);
 
         mRecyclerView = (RecyclerView) rootview.findViewById(R.id.my_recycler_view);
+
+        datasource = new MoneyDataSource(getContext());
+/*
+        datasource.open();
+        datasource.createMoney(450,1, "2017-05-02");
+        datasource.createMoney(20,0, "2017-05-02");
+        datasource.createMoney(450,1, "2017-06-02");
+        datasource.createMoney(1000,1, "2016-12-24");
+        datasource.close();*/
 
 
         return rootview;
@@ -60,19 +71,54 @@ public class MoneyFragment extends Fragment {
         int startJahr = 2016;
         int endJahr = 2017;
         int count = 0;
+        double gesamt = 0;
+
         ArrayList results = new ArrayList<Money>();
+        datasource.open();
+        ArrayList<Money> arrayOfmoney = null;
+
         for(int jahr = startJahr; jahr <= endJahr; jahr++){
 
             for(int monat =0; monat <= 11; monat++){
 
-                String newMonat = "01-"+monat+"-"+jahr;
+                double einnahmen = 0;
+                double ausgaben = 0;
 
-                Money obj = new Money(1, 453.25, 0,0, jahr, monat,0);
-                results.add(count, obj);
-                count = count+1;
+                String newmonat;
+                int tempmonat = monat + 1;
+                if(tempmonat<10){
+                    newmonat = "0"+tempmonat;
+                }else{
+                    newmonat = ""+tempmonat;
+                }
+
+                String startMonat =jahr+"-"+newmonat+"-01";
+                String endMonat =jahr+"-"+newmonat+"-"+31;
+
+
+                arrayOfmoney = datasource.getMoneyforMonth(startMonat, endMonat);
+
+
+                for(int i = 0; i < arrayOfmoney.size(); i++)
+                {
+                    if(arrayOfmoney.get(i).getTyp()== 1)
+                    {
+                        einnahmen = einnahmen + arrayOfmoney.get(i).getEuro();
+                    }else{
+                        ausgaben = ausgaben + arrayOfmoney.get(i).getEuro();
+                    }
+                }
+                gesamt = gesamt + einnahmen;
+                gesamt = gesamt - ausgaben;
+                if(einnahmen != 0 || ausgaben != 0) {
+                    Money obj = new Money(count, gesamt, einnahmen, ausgaben, jahr, monat, 0, 0);
+                    //results.add(count, obj);
+                    results.add(count, obj);
+                }
             }
 
         }
+        datasource.close();
         return results;
     }
 

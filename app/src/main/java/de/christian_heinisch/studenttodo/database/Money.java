@@ -14,10 +14,10 @@ public class Money {
     private int monat;
     private int jahr;
     private int tag;
+    private int typ;
 
 
-
-    public Money(long id, double Euro, double einnahme, double ausgabe, int jahr, int monat, int tag){
+    public Money(long id, double Euro, double einnahme, double ausgabe, int jahr, int monat, int tag, int typ){
 
         this.id = id;
         this.Euro = Euro;
@@ -26,6 +26,7 @@ public class Money {
         this.monat = monat;
         this.tag = tag;
         this.jahr = jahr;
+        this.typ = typ;
 
     }
 
@@ -83,5 +84,13 @@ public class Money {
 
     public void setTag(int tag) {
         this.tag = tag;
+    }
+
+    public int getTyp() {
+        return typ;
+    }
+
+    public void setTyp(int typ) {
+        this.typ = typ;
     }
 }

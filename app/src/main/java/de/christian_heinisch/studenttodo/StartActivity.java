@@ -1,5 +1,6 @@
 package de.christian_heinisch.studenttodo;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -196,6 +197,17 @@ public class StartActivity extends AppCompatActivity
         newFragment.setArguments(args);
         newFragment.show(ft, "dialog");
 
+    }
+
+    public void moneyDetail()
+    {
+        Fragment f = new MoneyDetail();
+        FragmentManager fragmentManager;
+        fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(R.id.content_start, f);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 
 

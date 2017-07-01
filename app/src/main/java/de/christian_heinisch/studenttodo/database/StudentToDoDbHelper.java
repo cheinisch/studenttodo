@@ -15,7 +15,7 @@ public class StudentToDoDbHelper extends SQLiteOpenHelper {
 
 
     public static final String DB_NAME = "studenttodo.db";
-    public static final int DB_VERSION = 2;
+    public static final int DB_VERSION = 5;
 
     /*Tabelle To Do Liste */
     public static final String TABLE_TODO_LIST = "todo_list";
@@ -47,7 +47,10 @@ public class StudentToDoDbHelper extends SQLiteOpenHelper {
                     "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_MONEY + " REAL NOT NULL, " +
                     COLUMN_MONEY_DATE + " TEXT NOT NULL, " +
-                    COLUMN_MONEY_TYPE + " TEXT NOT NULL);";
+                    COLUMN_MONEY_TYPE + " INTEGER NOT NULL);";
+
+    public static final String SQL_DROP_TODO = "DROP TABLE IF EXISTS " + TABLE_TODO_LIST;
+    public static final String SQL_DROP_MONEY = "DROP TABLE IF EXISTS " + TABLE_MONEY_LIST;
 
 
     public StudentToDoDbHelper(Context context) {
@@ -70,8 +73,13 @@ public class StudentToDoDbHelper extends SQLiteOpenHelper {
 
     }
 
+    // Die onUpgrade-Methode wird aufgerufen, sobald die neue Versionsnummer höher
+    // als die alte Versionsnummer ist und somit ein Upgrade notwendig wird
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        Log.d(LOG_TAG, "Die Tabelle mit Versionsnummer " + oldVersion + " wird entfernt.");
+        db.execSQL(SQL_DROP_TODO);
+        db.execSQL(SQL_DROP_MONEY);
+        onCreate(db);
     }
 }
