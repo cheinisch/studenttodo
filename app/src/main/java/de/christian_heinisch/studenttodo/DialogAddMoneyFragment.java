@@ -84,6 +84,7 @@ public class DialogAddMoneyFragment extends DialogFragment {
                         }
 
                         geld = Double.parseDouble(tvName.getText().toString());
+                        date = tvDate.getText().toString();
 
                         dataSource.open();
                         dataSource.createMoney(geld,geldeingang,date);
