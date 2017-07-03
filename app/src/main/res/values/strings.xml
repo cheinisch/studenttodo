@@ -32,6 +32,16 @@
     <!-- Geld -->
     <string name="money_title">Mein Geld</string>
 
+    <!-- Geld Add / Edit -->
+    <string name="money_add_title">Geldeingang/ausgang</string>
+    <string name="money_add_beschreibung">Betrag</string>
+    <string name="money_add_datum">Datum</string>
+    <string name="money_add_radiogroup">Eingang / Ausgang</string>
+    <string name="money_add_eingang">Eingang</string>
+    <string name="money_add_ausgang">Ausgang</string>
+
+    <string name="money_edit_title">Aufgabe bearbeiten</string>
+
     <!-- About -->
     <string name="about_title">Über diese App</string>
     <string name="about_develope_title">Mitwirkende</string>

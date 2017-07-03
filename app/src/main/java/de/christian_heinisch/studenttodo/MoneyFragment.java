@@ -3,6 +3,7 @@ package de.christian_heinisch.studenttodo;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -39,6 +40,14 @@ public class MoneyFragment extends Fragment {
         rootview = inflater.inflate(R.layout.fragment_money, container, false);
 
         mRecyclerView = (RecyclerView) rootview.findViewById(R.id.my_recycler_view);
+
+        FloatingActionButton fab = (FloatingActionButton) rootview.findViewById(R.id.floatingActionButton2);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((StartActivity)getContext()).DialogAddMoney();
+            }
+        });
 
         datasource = new MoneyDataSource(getContext());
 /*
