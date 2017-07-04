@@ -201,11 +201,25 @@ public class StartActivity extends AppCompatActivity
 
     public void DialogAddMoney(){
 
+
         Bundle args = new Bundle();
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         // Create and show the dialog.
         DialogAddMoneyFragment newFragment = new DialogAddMoneyFragment();
+        newFragment.setArguments(args);
+        newFragment.show(ft, "dialog");
+
+    }
+
+    public void DialogAddMoneyDetail(){
+
+
+        Bundle args = new Bundle();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        // Create and show the dialog.
+        DialogAddMoneyDetailFragment newFragment = new DialogAddMoneyDetailFragment();
         newFragment.setArguments(args);
         newFragment.show(ft, "dialog");
 

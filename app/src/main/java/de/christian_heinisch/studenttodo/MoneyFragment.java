@@ -50,13 +50,6 @@ public class MoneyFragment extends Fragment {
         });
 
         datasource = new MoneyDataSource(getContext());
-/*
-        datasource.open();
-        datasource.createMoney(450,1, "2017-05-02");
-        datasource.createMoney(20,0, "2017-05-02");
-        datasource.createMoney(450,1, "2017-06-02");
-        datasource.createMoney(1000,1, "2016-12-24");
-        datasource.close();*/
 
 
         return rootview;
@@ -130,5 +123,7 @@ public class MoneyFragment extends Fragment {
         datasource.close();
         return results;
     }
+
+
 
 }

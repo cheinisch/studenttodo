@@ -58,6 +58,7 @@ public class RVMoneyDetailAdapter extends RecyclerView.Adapter<MoneyDetailObject
     public void onBindViewHolder(final MoneyDetailObjectHolder holder, final int position) {
 
         final int typ = mDataset.get(position).getTyp();
+        final String date = mDataset.get(position).getTag() + "." + mDataset.get(position).getMonat() + "." + mDataset.get(position).getJahr();
         final String gesamt;
         if(typ == 1){
             gesamt = mDataset.get(position).getEinnahme() + " €";
@@ -69,6 +70,7 @@ public class RVMoneyDetailAdapter extends RecyclerView.Adapter<MoneyDetailObject
             holder.TextDetailAusgabe.setText("Ausgabe");
         }
         holder.ItemGesamt.setText(gesamt);
+        holder.Datum.setText(date);
 
     }
 

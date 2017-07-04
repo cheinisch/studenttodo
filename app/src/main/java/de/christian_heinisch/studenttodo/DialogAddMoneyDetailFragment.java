@@ -16,6 +16,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -27,7 +28,7 @@ import de.christian_heinisch.studenttodo.database.MoneyDataSource;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DialogAddMoneyFragment extends DialogFragment {
+public class DialogAddMoneyDetailFragment extends DialogFragment {
 
     View rootview;
     private MoneyDataSource dataSource;
@@ -40,7 +41,7 @@ public class DialogAddMoneyFragment extends DialogFragment {
     DatePickerDialog datePickerDialog;
 
 
-    public DialogAddMoneyFragment() {
+    public DialogAddMoneyDetailFragment() {
         // Required empty public constructor
     }
 

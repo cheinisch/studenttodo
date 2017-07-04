@@ -3,6 +3,7 @@ package de.christian_heinisch.studenttodo;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -46,6 +47,14 @@ public class MoneyDetail extends Fragment {
 
         // Inflate the layout for this fragment
         rootview = inflater.inflate(R.layout.fragment_money_detail, container, false);
+
+        FloatingActionButton fab = (FloatingActionButton) rootview.findViewById(R.id.fbMoneyDetailAdd);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((StartActivity)getContext()).DialogAddMoneyDetail();
+            }
+        });
 
         mRecyclerView = (RecyclerView) rootview.findViewById(R.id.rvMoneyDetail);
 
@@ -109,7 +118,7 @@ public class MoneyDetail extends Fragment {
                     }else {
                         ausgaben = ausgaben + arrayOfmoney.get(j).getAusgabe();
                     }
-                    obj = new Money(count, 0, arrayOfmoney.get(j).getEinnahme(), arrayOfmoney.get(j).getAusgabe(), jahr, monat, 0, arrayOfmoney.get(j).getTyp());
+                    obj = new Money(count, 0, arrayOfmoney.get(j).getEinnahme(), arrayOfmoney.get(j).getAusgabe(), arrayOfmoney.get(j).getJahr(), arrayOfmoney.get(j).getMonat(), arrayOfmoney.get(j).getTag(), arrayOfmoney.get(j).getTyp());
 
                     results.add(count, obj);
                     count = count + 1;

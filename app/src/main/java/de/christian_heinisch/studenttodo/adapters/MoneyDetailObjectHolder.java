@@ -17,8 +17,7 @@ public class MoneyDetailObjectHolder extends RecyclerView.ViewHolder {
 
     public LinearLayout regularLayout;
     public TextView ItemGesamt;
-    public TextView Monat;
-    public TextView Jahr;
+    public TextView Datum;
     public TextView TextDetail;
     public TextView TextDetailAusgabe;
 
@@ -28,8 +27,7 @@ public class MoneyDetailObjectHolder extends RecyclerView.ViewHolder {
 
         regularLayout = (LinearLayout) view.findViewById(R.id.regularLayout);
         ItemGesamt = (TextView) view.findViewById(R.id.moneyDetailEuro);
-        Monat  = (TextView) view.findViewById(R.id.textViewMoneyOverviewMonat);
-        Jahr  = (TextView) view.findViewById(R.id.textViewMoneyOverviewJahr);
+        Datum = (TextView) view.findViewById(R.id.textViewDate);
         TextDetail = (TextView) view.findViewById(R.id.textViewDetailText);
         TextDetailAusgabe = (TextView) view.findViewById(R.id.textViewDetailTextAusgabe);
 
